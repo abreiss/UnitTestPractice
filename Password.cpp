@@ -24,6 +24,52 @@ int Password::count_leading_characters(string phrase){
   receives a string and returns whether it has both at least one upper-case
   letter and at least one lower-case letter
 */
-bool Password::has_mixed_case(string pass){
+bool Password::has_mixed_case(string str)
+{
+  bool found = false;
+  for(char c : str){
+    if( !found && c >= 'A' && c <= 'Z' ){
+      found = true;
+    }
+    else if( found && c >= 'a' && c <= 'z'){
+      return true;
+    }
+  }
   return false;
+}
+
+/* Receives a string and returns a count of 
+how many case-sensitive unique characters there are. 
+If there are duplicate instances of the same character 
+it should only count as a single character. 
+Even if characters look similar, 
+as long as they have distinct ASCII values, 
+they should qualify as unique characters. */
+
+unsigned int Password::unique_characters(string str)
+{
+    if (str.size() == 0) {
+        return 0;
+    }
+
+    char used[256];  
+    int usedCount = 0;
+
+    for (int i = 0; i < str.size(); i++) {
+        char c = str[i];
+        bool found = false;
+
+        for (int j = 0; j < usedCount; j++) {
+            if (used[j] == c) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            used[usedCount] = c;
+            usedCount++;
+        }
+    }
+
+    return usedCount;
 }
